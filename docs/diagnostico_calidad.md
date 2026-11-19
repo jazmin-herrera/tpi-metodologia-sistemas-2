@@ -1,15 +1,17 @@
-# Diagnóstico de Calidad Interna, Externa y Deuda Técnica
 
-## 1. Calidad Externa vs. Calidad Interna
-* **Calidad Externa:** El sistema cumple las operaciones solicitadas. Permite dar de alta solicitudes de estudiantes (Federico Savastano, Juan Martinez, Marisa Amicuzi y Sonia Gonzalez), asignar docentes responsables (Carlos Cattaneo, Claudia Naveda, Diego Lobos y Guillermo Londero), actualizar estados, filtrar por estado y emitir el reporte general sin errores visibles.
-* **Calidad Interna:** Presenta alta deuda técnica. Toda la lógica de negocio, validaciones, cálculo de tiempos SLA, almacenamiento en memoria e impresión por consola están concentrados en `SistemaSolicitudes`.
+Resumen del diagnóstico: qué evalúa el documento (calidad interna y externa del sistema de gestión de solicitudes académicas en Java, deuda técnica y mejoras aplicadas).
 
-## 2. Registro de Code Smells Detectados
-1. **God Class (`SistemaSolicitudes.java`):** Concentra almacenamiento, validación, reglas de negocio y formato de salida.
-2. **Long Method (`procesarYRegistrarSolicitud`):** Método extenso que valida, calcula tiempos, instancia objetos, persiste y muestra mensajes.
-3. **Long Parameter List (`procesarYRegistrarSolicitud`):** Recibe 9 parámetros sueltos, dificultando su lectura e invocación.
-4. **Primitive Obsession (`Solicitud.java` y `SistemaSolicitudes.java`):** Uso de cadenas de texto (`"ABIERTA"`, `"ALTA"`, `"EQUIVALENCIA"`) sin validación de tipos.
-5. **Switch Statements / Condicionales Complejos (`procesarYRegistrarSolicitud`):** Bloques `if-else` anidados para calcular las horas estimadas según tipo y prioridad.
-6. **Duplicated Code (`procesarYRegistrarSolicitud`, `asignarResponsable`, `cambiarEstado`):** Validaciones de nulos/vacíos y formateo de cadenas de responsable repetidos en varios métodos.
-7. **Feature Envy (`SistemaSolicitudes.java`):** El servicio consulta y modifica directamente los campos internos de `Solicitud` en lugar de delegar el cambio de estado a la propia entidad.
-8. **Public Mutable Fields / Violación de Encapsulamiento (`Estudiante`, `Responsable`, `Solicitud`):** Atributos públicos sin control de acceso ni invariantes de dominio.
+Calidad interna y code smells detectados: listá los problemas encontrados en el estado inicial (por ejemplo, lógica mezclada, validaciones duplicadas, responsabilidades acopladas o reportes/persistencia rígidos) y explicá cómo dificultaban el mantenimiento o los cambios.
+
+Calidad externa y riesgos operativos: detallá cómo impactaban esos problemas en el comportamiento observable del sistema (reglas de cambio de estado, asignación de docentes, filtros, cálculo de SLA y reportes).
+
+Aplicación de SOLID, Clean Code y refactorings: vinculá cada mejora con las clases y responsabilidades de la versión refactorizada (sin inventar nombres de clases que no estén en tu código; revisá tus archivos en  para citar los exactos).src/
+
+Verificación mediante pruebas y code review: resumí qué cubren las pruebas de verificación, qué se revisó en el code review y cómo se alinean con los tags y evidencias.
+
+2. Qué controlar antes de guardar el archivo
+Coherencia con y :src/evidencias/ verificá que los ejemplos, nombres de clases y referencias a capturas coincidan con los archivos reales de tu repositorio y con los tags que creaste.
+
+Autoría y datos de ejemplo: asegurá que el documento figure a tu nombre (Jazmin Herrera) y que cualquier ejemplo de estudiante, docente o comisión use datos sintéticos o anonimizados.
+
+Consistencia con y el PDF:README.md mantené los mismos nombres de hitos/tags y el mismo enfoque técnico para que la entrega sea uniforme.
